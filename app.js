@@ -1,83 +1,99 @@
-// ===============================
+// =======================
 // LOGIN
-// ===============================
-
+// =======================
 function login() {
-  const senhaInput = document.getElementById("senha");
-  const confirmarInput = document.getElementById("confirmarSenha");
+  const senha = document.getElementById("senha").value;
+  const confirmar = document.getElementById("confirmarSenha").value;
+  const mensagem = document.getElementById("mensagem");
 
-  const senha = senhaInput ? senhaInput.value : "";
-  const confirmar = confirmarInput ? confirmarInput.value : "";
-
-  const senhaSalva = localStorage.getItem("senha");
-
-  if (!senhaSalva) {
-    if (senha === confirmar && senha !== "") {
-      localStorage.setItem("senha", senha);
-      abrirMenu();
-    } else {
-      alert("Senhas não conferem");
+  // Primeira vez (criar senha)
+  if (!localStorage.getItem("senha")) {
+    if (!senha || !confirmar) {
+      mensagem.innerText = "Preencha os dois campos.";
+      return;
     }
-  } else {
-    if (senha === senhaSalva) {
-      abrirMenu();
-    } else {
-      alert("Senha incorreta");
+
+    if (senha !== confirmar) {
+      mensagem.innerText = "As senhas não coincidem.";
+      return;
     }
-  }
-}
 
-// ===============================
-// NAVEGAÇÃO SEGURA
-// ===============================
-
-function abrirMenu() {
-  esconderTodas();
-
-  const menu = document.getElementById("menuScreen");
-
-  if (menu) {
-    menu.classList.add("active");
-  } else {
-    console.error("menuScreen não encontrado");
-  }
-}
-
-function openScreen(id) {
-  esconderTodas();
-
-  const tela = document.getElementById(id);
-
-  if (tela) {
-    tela.classList.add("active");
-  } else {
-    console.error("Tela não encontrada:", id);
-  }
-}
-
-function voltar() {
-  abrirMenu();
-}
-
-// ===============================
-// CONTROLE DE TELAS
-// ===============================
-
-function esconderTodas() {
-  const telas = document.querySelectorAll(".screen");
-
-  if (!telas || telas.length === 0) {
-    console.warn("Nenhuma tela encontrada com .screen");
+    localStorage.setItem("senha", senha);
+    mensagem.innerText = "Senha criada com sucesso!";
     return;
   }
 
-  telas.forEach((el) => {
-    el.classList.remove("active");
+  // Login normal
+  if (senha === localStorage.getItem("senha")) {
+    openScreen("home");
+  } else {
+    mensagem.innerText = "Senha incorreta.";
+  }
+}
+
+// =======================
+// NAVEGAÇÃO
+// =======================
+function openScreen(nome) {
+  document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+
+  if (nome === "home") document.getElementById("home-screen").classList.add("active");
+  if (nome === "felipe") document.getElementById("felipe-screen").classList.add("active");
+  if (nome === "beneapps") document.getElementById("beneapps-screen").classList.add("active");
+  if (nome === "projetos") document.getElementById("projetos-screen").classList.add("active");
+}
+
+function goHome() {
+  openScreen("home");
+}
+
+// =======================
+// FINANCEIRO
+// =======================
+let saldo = 0;
+
+function addTransacao(tipo) {
+  const valor = parseFloat(document.getElementById("valor").value);
+
+  if (!valor) return;
+
+  if (tipo === "entrada") saldo += valor;
+  else saldo -= valor;
+
+  document.getElementById("saldo").innerText = saldo.toFixed(2);
+}
+
+// =======================
+// BENEAPPS
+// =======================
+function gastoEmpresa() {
+  const valor = document.getElementById("gastoEmpresa").value;
+  alert("Gasto registrado: R$ " + valor);
+}
+
+// =======================
+// PROJETOS
+// =======================
+function addProjeto() {
+  const nome = document.getElementById("nomeProjeto").value;
+  alert("Projeto salvo: " + nome);
+}
+
+function copiarCodigo() {
+  const codigo = document.getElementById("codigoHTML").value;
+
+  navigator.clipboard.writeText(codigo).then(() => {
+    alert("Código copiado!");
   });
 }
 
-// ===============================
-// DEBUG (opcional, ajuda MUITO)
-// ===============================
+function limparCodigo() {
+  document.getElementById("codigoHTML").value = "";
+}
 
-console.log("App carregado com sucesso");
+function executarHTML() {
+  const codigo = document.getElementById("codigoHTML").value;
+  const iframe = document.getElementById("previewFrame");
+
+  iframe.srcdoc = codigo;
+}

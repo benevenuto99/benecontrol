@@ -4,57 +4,82 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BeneControl</title>
-  <link rel="stylesheet" href="styles.css">
+
+  <<link rel="stylesheet" href="styles.css?v=2">>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0f172a">
 </head>
 
 <body>
 
-<!-- LOGIN -->
-<div id="loginScreen" class="screen active">
+  <!-- LOGIN -->
+  <div id="login-screen" class="screen active">
   <h1>BeneControl</h1>
 
   <input type="password" id="senha" placeholder="Crie ou digite sua senha">
   <input type="password" id="confirmarSenha" placeholder="Confirme a senha (primeira vez)">
 
   <button onclick="login()">Entrar</button>
+
+  <p id="mensagem"></p>
 </div>
 
-<!-- MENU -->
-<div id="menuScreen" class="screen">
-  <h1>BeneControl</h1>
+  <!-- HOME -->
+  <div id="home-screen" class="screen">
+    <h2>Escolha uma área</h2>
 
-  <div class="grid">
-    <div onclick="openScreen('pessoalScreen')">👤 Pessoal</div>
-    <div onclick="openScreen('beneappsScreen')">🏢 BeneApps</div>
-    <div onclick="openScreen('projetosScreen')">💻 Projetos</div>
-    <div onclick="openScreen('planejamentoScreen')">📊 Planejamento</div>
+    <div class="cards">
+      <div class="card" onclick="openScreen('felipe')">Felipe</div>
+      <div class="card" onclick="openScreen('beneapps')">BeneApps</div>
+      <div class="card" onclick="openScreen('projetos')">Projetos</div>
+    </div>
   </div>
 
-  <img src="assets/logo-beneapps.png" class="logo">
-</div>
+  <!-- FELIPE -->
+  <div id="felipe-screen" class="screen">
+    <h2>Financeiro Pessoal</h2>
 
-<!-- PESSOAL -->
-<div id="pessoalScreen" class="screen">
-  <button onclick="voltar()">← Voltar</button>
-  <h2>Pessoal</h2>
-</div>
+    <input type="number" id="valor" placeholder="Valor">
+    <button onclick="addTransacao('entrada')">Entrada</button>
+    <button onclick="addTransacao('saida')">Saída</button>
 
-<!-- BENEAPPS -->
-<div id="beneappsScreen" class="screen">
-  <button onclick="voltar()">← Voltar</button>
-  <h2>BeneApps</h2>
-</div>
+    <h3>Saldo: R$ <span id="saldo">0</span></h3>
 
-<!-- PROJETOS -->
-<div id="projetosScreen" class="screen">
-  <button onclick="voltar()">← Voltar</button>
+    <button onclick="goHome()">Voltar</button>
+  </div>
+
+  <!-- BENEAPPS -->
+  <div id="beneapps-screen" class="screen">
+    <h2>BeneApps</h2>
+
+    <input type="number" id="gastoEmpresa" placeholder="Valor">
+    <button onclick="gastoEmpresa()">Registrar gasto</button>
+
+    <button onclick="goHome()">Voltar</button>
+  </div>
+
+  <!-- PROJETOS -->
+  <div id="projetos-screen" class="screen">
   <h2>Projetos</h2>
-</div>
 
-<!-- PLANEJAMENTO -->
-<div id="planejamentoScreen" class="screen">
-  <button onclick="voltar()">← Voltar</button>
-  <h2>Planejamento</h2>
+  <input type="text" id="nomeProjeto" placeholder="Nome do projeto">
+
+  <textarea id="descricaoProjeto" placeholder="Ideias..."></textarea>
+
+  <textarea id="codigoHTML" placeholder="Cole ou escreva seu código HTML aqui..."></textarea>
+
+  <div class="botoes">
+    <button onclick="copiarCodigo()">📋 Copiar</button>
+    <button onclick="limparCodigo()">🧹 Limpar</button>
+    <button onclick="executarHTML()">▶️ Executar</button>
+  </div>
+
+  <div id="preview">
+    <iframe id="previewFrame"></iframe>
+  </div>
+
+  <button onclick="addProjeto()">Salvar projeto</button>
+  <button onclick="goHome()">Voltar</button>
 </div>
 
 <script src="app.js"></script>
