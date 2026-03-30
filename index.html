@@ -2,23 +2,547 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="theme-color" content="#050b18">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>BeneControl</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
 
-<div class="login-container">
-  <h1>BeneControl</h1>
+<div class="bg-mesh"></div>
 
-  <input type="password" placeholder="Crie ou digite sua senha">
-  <input type="password" placeholder="Confirme a senha (primeira vez)">
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
 
-  <button>Entrar</button>
+<!-- ================================
+     MODALS
+================================ -->
 
-  <img src="assets/logo-beneapps.png" class="logo">
+<!-- Modal: Nova Transação -->
+<div class="modal-overlay hidden" id="modal-transaction">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title">Nova Transação</div>
+    <div class="form-group">
+      <label>Tipo</label>
+      <select id="tx-type">
+        <option value="entrada">💰 Entrada</option>
+        <option value="saida">💸 Saída</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Descrição</label>
+      <input type="text" id="tx-desc" placeholder="Ex: Salário, Aluguel...">
+    </div>
+    <div class="form-group">
+      <label>Valor (R$)</label>
+      <input type="number" id="tx-value" placeholder="0,00" step="0.01" min="0">
+    </div>
+    <div class="form-group">
+      <label>Conta</label>
+      <select id="tx-account">
+        <option value="corrente">Conta Corrente Itaú</option>
+        <option value="poupanca">Poupança Itaú</option>
+        <option value="bradesco">Bradesco</option>
+        <option value="sicoob">Sicoob</option>
+        <option value="cofre">Cofre</option>
+        <option value="outros">Outros</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Data</label>
+      <input type="date" id="tx-date">
+    </div>
+    <div class="flex gap-8 mt-16">
+      <button class="btn btn-secondary" onclick="closeModal('modal-transaction')">Cancelar</button>
+      <button class="btn btn-primary" style="flex:1" onclick="saveTransaction()">Salvar</button>
+    </div>
+  </div>
 </div>
 
+<!-- Modal: Nova Conta Mensal -->
+<div class="modal-overlay hidden" id="modal-new-bill">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title">Nova Conta</div>
+    <div class="form-group">
+      <label>Nome da Conta</label>
+      <input type="text" id="bill-name" placeholder="Ex: Aluguel, Luz, Internet...">
+    </div>
+    <div class="form-group">
+      <label>Valor (R$)</label>
+      <input type="number" id="bill-value" placeholder="0,00" step="0.01" min="0">
+    </div>
+    <div class="form-group">
+      <label>Tipo</label>
+      <select id="bill-type">
+        <option value="fixa">📌 Fixa</option>
+        <option value="variavel">📊 Variável</option>
+      </select>
+    </div>
+    <div class="flex gap-8 mt-16">
+      <button class="btn btn-secondary" onclick="closeModal('modal-new-bill')">Cancelar</button>
+      <button class="btn btn-primary" style="flex:1" onclick="saveBill()">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Pagamento de Conta -->
+<div class="modal-overlay hidden" id="modal-pay-bill">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title">💳 Registrar Pagamento</div>
+    <div id="modal-pay-variable-val" class="form-group hidden">
+      <label>Valor pago (R$)</label>
+      <input type="number" id="pay-variable-val" placeholder="0,00" step="0.01" min="0">
+    </div>
+    <p class="text-sm text-muted mb-12">De onde saiu o dinheiro?</p>
+    <div class="option-list" id="pay-source-list">
+      <div class="option-item" onclick="confirmPayBill('corrente')">🏦 Conta Corrente Itaú</div>
+      <div class="option-item" onclick="confirmPayBill('poupanca')">🏧 Poupança Itaú</div>
+      <div class="option-item" onclick="confirmPayBill('bradesco')">🏦 Bradesco</div>
+      <div class="option-item" onclick="confirmPayBill('sicoob')">🏦 Sicoob</div>
+      <div class="option-item" onclick="confirmPayBill('cofre')">🔐 Cofre</div>
+      <div class="option-item" onclick="confirmPayBill('nenhum')">❌ Nenhum</div>
+    </div>
+    <button class="btn btn-secondary btn-full mt-12" onclick="closeModal('modal-pay-bill')">Cancelar</button>
+  </div>
+</div>
+
+<!-- Modal: Novo Projeto -->
+<div class="modal-overlay hidden" id="modal-new-project">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title" id="modal-project-title">Novo Projeto</div>
+    <div class="form-group">
+      <label>Título</label>
+      <input type="text" id="proj-title" placeholder="Nome do projeto...">
+    </div>
+    <div class="form-group">
+      <label>Descrição</label>
+      <textarea id="proj-desc" placeholder="Descreva o projeto..."></textarea>
+    </div>
+    <div class="form-group">
+      <label>Status</label>
+      <select id="proj-status">
+        <option value="planejamento">🗂️ Planejamento</option>
+        <option value="andamento">🚀 Em Andamento</option>
+        <option value="concluido">✅ Concluído</option>
+        <option value="pausado">⏸️ Pausado</option>
+      </select>
+    </div>
+    <div class="flex gap-8 mt-16">
+      <button class="btn btn-secondary" onclick="closeModal('modal-new-project')">Cancelar</button>
+      <button class="btn btn-primary" style="flex:1" onclick="saveProject()">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Nova Meta -->
+<div class="modal-overlay hidden" id="modal-new-goal">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title" id="modal-goal-title">Nova Meta</div>
+    <div class="form-group">
+      <label>Título</label>
+      <input type="text" id="goal-title" placeholder="Ex: Economizar R$ 5.000...">
+    </div>
+    <div class="form-group">
+      <label>Descrição</label>
+      <textarea id="goal-desc" placeholder="Detalhes da meta..."></textarea>
+    </div>
+    <div class="form-group">
+      <label>Categoria</label>
+      <select id="goal-cat">
+        <option value="financeiro">💰 Financeiro</option>
+        <option value="pessoal">🧠 Pessoal</option>
+        <option value="treino">💪 Treino</option>
+        <option value="estudos">📚 Estudos</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Status</label>
+      <select id="goal-status">
+        <option value="pendente">⏳ Pendente</option>
+        <option value="andamento">🚀 Em Andamento</option>
+        <option value="concluido">✅ Concluído</option>
+      </select>
+    </div>
+    <div class="flex gap-8 mt-16">
+      <button class="btn btn-secondary" onclick="closeModal('modal-new-goal')">Cancelar</button>
+      <button class="btn btn-primary" style="flex:1" onclick="saveGoal()">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Nova Ideia -->
+<div class="modal-overlay hidden" id="modal-new-idea">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title" id="modal-idea-title">Nova Ideia</div>
+    <div class="form-group">
+      <label>Título</label>
+      <input type="text" id="idea-title" placeholder="Nome da ideia...">
+    </div>
+    <div class="form-group">
+      <label>Descrição</label>
+      <textarea id="idea-desc" placeholder="Descreva sua ideia..."></textarea>
+    </div>
+    <div class="form-group">
+      <label>Status</label>
+      <select id="idea-status">
+        <option value="pendente">💡 Pendente</option>
+        <option value="andamento">🔧 Em andamento</option>
+        <option value="concluido">✅ Concluído</option>
+      </select>
+    </div>
+    <div class="flex gap-8 mt-16">
+      <button class="btn btn-secondary" onclick="closeModal('modal-new-idea')">Cancelar</button>
+      <button class="btn btn-primary" style="flex:1" onclick="saveIdea()">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Confirmar fechamento do mês -->
+<div class="modal-overlay hidden" id="modal-close-month">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title">⚠️ Fechar Mês</div>
+    <p class="text-sm text-muted mb-12">Tem certeza que deseja encerrar o mês atual e gerar o próximo? As contas fixas serão mantidas automaticamente.</p>
+    <div id="close-month-pending-info" class="card mb-12" style="display:none;">
+      <p class="text-sm" id="close-month-pending-text" style="color:var(--yellow)"></p>
+    </div>
+    <div class="flex gap-8 mt-16">
+      <button class="btn btn-secondary" onclick="closeModal('modal-close-month')">Cancelar</button>
+      <button class="btn btn-primary" style="flex:1" onclick="confirmCloseMonth()">Confirmar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Resumo WhatsApp -->
+<div class="modal-overlay hidden" id="modal-share">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title">📤 Compartilhar Resumo</div>
+    <div id="share-preview" class="card" style="font-size:0.82rem; white-space:pre-wrap; line-height:1.7; color:var(--text-2);"></div>
+    <div class="flex gap-8 mt-16">
+      <button class="btn btn-secondary" onclick="closeModal('modal-share')">Fechar</button>
+      <button class="btn btn-primary" style="flex:1" onclick="sendWhatsApp()">📱 WhatsApp</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================================
+     SCREENS
+================================ -->
+
+<!-- LOGIN -->
+<div class="screen active" id="screen-login">
+  <div class="login-card">
+    <div class="login-logo">
+      <img src="assets/logo-beneapps.png" alt="BeneApps">
+      <div class="brand">BeneControl</div>
+      <div class="tagline">Gestão de vida pessoal</div>
+    </div>
+    <div class="login-title" id="login-subtitle">Entre com sua senha</div>
+    <div class="form-group">
+      <label>Senha</label>
+      <input type="password" id="login-pass" placeholder="••••••••" autocomplete="current-password">
+    </div>
+    <div class="form-group hidden" id="login-confirm-group">
+      <label>Confirmar senha</label>
+      <input type="password" id="login-confirm" placeholder="••••••••" autocomplete="new-password">
+    </div>
+    <button class="btn btn-primary btn-full mt-16" id="login-btn" onclick="handleLogin()">Entrar</button>
+    <p class="text-xs text-muted mt-12" style="text-align:center">Seus dados ficam somente neste dispositivo</p>
+  </div>
+</div>
+
+<!-- HOME -->
+<div class="screen" id="screen-home">
+  <div class="home-header">
+    <div class="home-logo">
+      <img src="assets/logo-beneapps.png" alt="BeneApps">
+    </div>
+    <div class="home-greeting">BeneControl</div>
+    <div class="home-sub">Selecione um módulo para começar</div>
+    <button class="logout-btn mt-12" onclick="doLogout()">🚪 Sair</button>
+  </div>
+
+  <div class="modules-grid">
+    <div class="module-card blue" onclick="openScreen('screen-pessoal')">
+      <div class="module-icon blue">💰</div>
+      <div class="module-name">Pessoal</div>
+      <div class="module-desc">Finanças, contas e saldo</div>
+    </div>
+    <div class="module-card cyan" onclick="openScreen('screen-beneapps')">
+      <div class="module-icon cyan">⚡</div>
+      <div class="module-name">BeneApps</div>
+      <div class="module-desc">Ferramentas e apps</div>
+    </div>
+    <div class="module-card purple" onclick="openScreen('screen-projetos')">
+      <div class="module-icon purple">🚀</div>
+      <div class="module-name">Projetos</div>
+      <div class="module-desc">Gerenciar projetos</div>
+    </div>
+    <div class="module-card green" onclick="openScreen('screen-planejamento')">
+      <div class="module-icon green">🗓️</div>
+      <div class="module-name">Planejamento</div>
+      <div class="module-desc">Metas e objetivos</div>
+    </div>
+  </div>
+
+  <div class="progress-section">
+    <div class="progress-header">
+      <span class="progress-label">🛠️ Progresso do App</span>
+      <span class="progress-pct" id="progress-pct-text">20%</span>
+    </div>
+    <div class="progress-bar-bg">
+      <div class="progress-bar-fill" id="progress-bar" style="width:20%"></div>
+    </div>
+    <div class="progress-actions">
+      <button class="btn btn-secondary btn-sm" onclick="updateProgress(-5)">−5%</button>
+      <button class="btn btn-secondary btn-sm" onclick="updateProgress(5)">+5%</button>
+      <button class="btn btn-secondary btn-sm" onclick="updateProgress(10)">+10%</button>
+    </div>
+  </div>
+
+  <!-- IDEAS shortcut -->
+  <div class="page-content">
+    <div class="flex-between mb-12">
+      <div class="section-title"><span class="dot"></span> Ideias Recentes</div>
+      <button class="btn btn-sm btn-secondary" onclick="openScreen('screen-ideias')">Ver tudo</button>
+    </div>
+    <div id="home-ideas-preview"></div>
+    <button class="btn btn-primary btn-full mt-8" onclick="openAddIdea()">+ Nova Ideia</button>
+  </div>
+</div>
+
+<!-- PESSOAL / FINANCEIRO -->
+<div class="screen" id="screen-pessoal">
+  <div class="topbar">
+    <div class="topbar-left">
+      <img src="assets/logo-beneapps.png" alt="" class="topbar-logo">
+      <span class="topbar-title">Pessoal</span>
+    </div>
+    <div class="topbar-right">
+      <button class="back-btn" onclick="goBack()">← Início</button>
+    </div>
+  </div>
+
+  <div class="page-content">
+    <!-- Account Cards -->
+    <div class="section-title"><span class="dot"></span>Contas</div>
+    <div class="accounts-grid" id="accounts-grid"></div>
+
+    <!-- Quick Actions -->
+    <div class="flex gap-8 mb-20">
+      <button class="btn btn-primary" style="flex:1" onclick="openAddTransaction('entrada')">+ Entrada</button>
+      <button class="btn btn-danger" style="flex:1" onclick="openAddTransaction('saida')">− Saída</button>
+    </div>
+
+    <!-- Bills Section -->
+    <div class="flex-between mb-12">
+      <div class="section-title"><span class="dot"></span>Contas Mensais</div>
+      <button class="btn btn-sm btn-secondary" onclick="openScreen('screen-contas')">Gerenciar</button>
+    </div>
+    <div id="bills-preview-home" style="margin-bottom:8px;"></div>
+
+    <!-- Transaction History -->
+    <div class="section-title mt-16"><span class="dot"></span>Últimas Transações</div>
+    <div class="card">
+      <div id="tx-list"></div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTAS MENSAIS -->
+<div class="screen" id="screen-contas">
+  <div class="topbar">
+    <div class="topbar-left">
+      <img src="assets/logo-beneapps.png" alt="" class="topbar-logo">
+      <span class="topbar-title">Contas Mensais</span>
+    </div>
+    <div class="topbar-right">
+      <button class="back-btn" onclick="openScreen('screen-pessoal')">← Pessoal</button>
+    </div>
+  </div>
+
+  <div class="page-content">
+    <div class="month-nav">
+      <span class="month-label" id="current-month-label"></span>
+      <div class="flex gap-8">
+        <button class="btn btn-sm btn-secondary" onclick="openModal('modal-share')">📤</button>
+        <button class="btn btn-sm btn-secondary" onclick="openModal('modal-close-month')">Fechar Mês</button>
+      </div>
+    </div>
+
+    <!-- Summary -->
+    <div class="bills-summary">
+      <div class="summary-card">
+        <div class="s-label">Total</div>
+        <div class="s-value" id="bills-total" style="color:var(--text-1)">R$ 0</div>
+      </div>
+      <div class="summary-card">
+        <div class="s-label">Pago</div>
+        <div class="s-value" id="bills-paid" style="color:var(--green)">R$ 0</div>
+      </div>
+      <div class="summary-card">
+        <div class="s-label">Pendente</div>
+        <div class="s-value" id="bills-pending" style="color:var(--yellow)">R$ 0</div>
+      </div>
+    </div>
+
+    <div id="bills-list"></div>
+
+    <button class="btn btn-primary btn-full mt-12" onclick="openModal('modal-new-bill')">+ Nova Conta</button>
+  </div>
+</div>
+
+<!-- PROJETOS -->
+<div class="screen" id="screen-projetos">
+  <div class="topbar">
+    <div class="topbar-left">
+      <img src="assets/logo-beneapps.png" alt="" class="topbar-logo">
+      <span class="topbar-title">Projetos</span>
+    </div>
+    <div class="topbar-right">
+      <button class="back-btn" onclick="goBack()">← Início</button>
+    </div>
+  </div>
+
+  <div class="page-content">
+    <div class="project-status-tabs" id="proj-tabs">
+      <div class="status-tab active" data-filter="todos" onclick="filterProjects('todos', this)">Todos</div>
+      <div class="status-tab" data-filter="planejamento" onclick="filterProjects('planejamento', this)">Planejamento</div>
+      <div class="status-tab" data-filter="andamento" onclick="filterProjects('andamento', this)">Em Andamento</div>
+      <div class="status-tab" data-filter="concluido" onclick="filterProjects('concluido', this)">Concluídos</div>
+      <div class="status-tab" data-filter="pausado" onclick="filterProjects('pausado', this)">Pausados</div>
+    </div>
+
+    <div id="projects-list"></div>
+
+    <button class="btn btn-primary btn-full mt-12" onclick="openAddProject()">+ Novo Projeto</button>
+  </div>
+</div>
+
+<!-- PLANEJAMENTO -->
+<div class="screen" id="screen-planejamento">
+  <div class="topbar">
+    <div class="topbar-left">
+      <img src="assets/logo-beneapps.png" alt="" class="topbar-logo">
+      <span class="topbar-title">Planejamento</span>
+    </div>
+    <div class="topbar-right">
+      <button class="back-btn" onclick="goBack()">← Início</button>
+    </div>
+  </div>
+
+  <div class="page-content">
+    <div class="planning-cats mb-16">
+      <div class="cat-chip active" data-cat="todos" onclick="filterGoals('todos', this)">📋 Todos</div>
+      <div class="cat-chip" data-cat="financeiro" onclick="filterGoals('financeiro', this)">💰 Financeiro</div>
+      <div class="cat-chip" data-cat="pessoal" onclick="filterGoals('pessoal', this)">🧠 Pessoal</div>
+      <div class="cat-chip" data-cat="treino" onclick="filterGoals('treino', this)">💪 Treino</div>
+      <div class="cat-chip" data-cat="estudos" onclick="filterGoals('estudos', this)">📚 Estudos</div>
+    </div>
+
+    <div id="goals-list"></div>
+
+    <button class="btn btn-primary btn-full mt-12" onclick="openAddGoal()">+ Nova Meta</button>
+  </div>
+</div>
+
+<!-- BENEAPPS -->
+<div class="screen" id="screen-beneapps">
+  <div class="topbar">
+    <div class="topbar-left">
+      <img src="assets/logo-beneapps.png" alt="" class="topbar-logo">
+      <span class="topbar-title">BeneApps</span>
+    </div>
+    <div class="topbar-right">
+      <button class="back-btn" onclick="goBack()">← Início</button>
+    </div>
+  </div>
+
+  <div class="page-content">
+    <div class="section-title mb-16"><span class="dot"></span>Ferramentas</div>
+    <div class="beneapps-grid">
+      <div class="app-chip">
+        <div class="app-chip-icon">💧</div>
+        <div class="app-chip-name">Hidratação Pro</div>
+        <div class="app-chip-tag">Em breve</div>
+      </div>
+      <div class="app-chip">
+        <div class="app-chip-icon">🔔</div>
+        <div class="app-chip-name">PreçoAlerta</div>
+        <div class="app-chip-tag">Em breve</div>
+      </div>
+      <div class="app-chip">
+        <div class="app-chip-icon">🔐</div>
+        <div class="app-chip-name">Cofre Pessoal</div>
+        <div class="app-chip-tag">Em breve</div>
+      </div>
+      <div class="app-chip">
+        <div class="app-chip-icon">🏋️</div>
+        <div class="app-chip-name">Controle Total</div>
+        <div class="app-chip-tag">Em breve</div>
+      </div>
+      <div class="app-chip">
+        <div class="app-chip-icon">📊</div>
+        <div class="app-chip-name">Analytics</div>
+        <div class="app-chip-tag">Em breve</div>
+      </div>
+      <div class="app-chip">
+        <div class="app-chip-icon">➕</div>
+        <div class="app-chip-name">Mais apps</div>
+        <div class="app-chip-tag">Em breve</div>
+      </div>
+    </div>
+
+    <div class="card mt-20">
+      <div class="card-title mb-12">📌 Sobre o BeneControl</div>
+      <p class="text-sm" style="color:var(--text-2);line-height:1.7;">
+        O BeneControl é o hub central de gestão pessoal da BeneApps. Aqui você encontra controle financeiro, projetos, planejamento de metas e registro de ideias — tudo em um só lugar, offline e sem depender de servidores.
+      </p>
+      <div class="divider"></div>
+      <p class="text-xs text-muted">Desenvolvido por BeneApps · Cataguases, MG</p>
+    </div>
+  </div>
+</div>
+
+<!-- IDEIAS -->
+<div class="screen" id="screen-ideias">
+  <div class="topbar">
+    <div class="topbar-left">
+      <img src="assets/logo-beneapps.png" alt="" class="topbar-logo">
+      <span class="topbar-title">Ideias</span>
+    </div>
+    <div class="topbar-right">
+      <button class="back-btn" onclick="openScreen('screen-home')">← Início</button>
+    </div>
+  </div>
+
+  <div class="page-content">
+    <div class="project-status-tabs">
+      <div class="status-tab active" onclick="filterIdeas('todos', this)">Todas</div>
+      <div class="status-tab" onclick="filterIdeas('pendente', this)">Pendentes</div>
+      <div class="status-tab" onclick="filterIdeas('andamento', this)">Em andamento</div>
+      <div class="status-tab" onclick="filterIdeas('concluido', this)">Concluídas</div>
+    </div>
+
+    <div id="ideas-list"></div>
+
+    <button class="btn btn-primary btn-full mt-12" onclick="openAddIdea()">+ Nova Ideia</button>
+  </div>
+</div>
+
+<script src="app.js"></script>
 </body>
 </html>
