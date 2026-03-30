@@ -36,7 +36,7 @@ function login() {
     openScreen("home");
   } else {
     alert("Senha incorreta");
-  }
+
 }
 
 function openScreen(nome) {
