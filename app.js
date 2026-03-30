@@ -1,49 +1,83 @@
-function login() {
-    const senha = document.getElementById("senha").value;
-    const confirmar = document.getElementById("confirmarSenha").value;
+// ===============================
+// LOGIN
+// ===============================
 
-    if (!localStorage.getItem("senha")) {
-        if (senha === confirmar && senha !== "") {
-            localStorage.setItem("senha", senha);
-            abrirMenu();
-        } else {
-            alert("Senhas não conferem");
-        }
+function login() {
+  const senhaInput = document.getElementById("senha");
+  const confirmarInput = document.getElementById("confirmarSenha");
+
+  const senha = senhaInput ? senhaInput.value : "";
+  const confirmar = confirmarInput ? confirmarInput.value : "";
+
+  const senhaSalva = localStorage.getItem("senha");
+
+  if (!senhaSalva) {
+    if (senha === confirmar && senha !== "") {
+      localStorage.setItem("senha", senha);
+      abrirMenu();
     } else {
-        if (senha === localStorage.getItem("senha")) {
-            abrirMenu();
-        } else {
-            alert("Senha incorreta");
-        }
+      alert("Senhas não conferem");
     }
+  } else {
+    if (senha === senhaSalva) {
+      abrirMenu();
+    } else {
+      alert("Senha incorreta");
+    }
+  }
 }
 
+// ===============================
+// NAVEGAÇÃO SEGURA
+// ===============================
+
 function abrirMenu() {
-    esconderTodas();
-    const menu = document.getElementById("menuScreen");
-    if (menu) menu.classList.add("active");
+  esconderTodas();
+
+  const menu = document.getElementById("menuScreen");
+
+  if (menu) {
+    menu.classList.add("active");
+  } else {
+    console.error("menuScreen não encontrado");
+  }
 }
 
 function openScreen(id) {
-    esconderTodas();
+  esconderTodas();
 
-    const tela = document.getElementById(id);
+  const tela = document.getElementById(id);
 
-    if (!tela) {
-        console.error("Tela não encontrada:", id);
-        alert("Erro: tela não encontrada -> " + id);
-        return;
-    }
-
+  if (tela) {
     tela.classList.add("active");
+  } else {
+    console.error("Tela não encontrada:", id);
+  }
 }
 
 function voltar() {
-    abrirMenu();
+  abrirMenu();
 }
 
+// ===============================
+// CONTROLE DE TELAS
+// ===============================
+
 function esconderTodas() {
-    document.querySelectorAll(".screen").forEach(el => {
-        el.classList.remove("active");
-    });
+  const telas = document.querySelectorAll(".screen");
+
+  if (!telas || telas.length === 0) {
+    console.warn("Nenhuma tela encontrada com .screen");
+    return;
+  }
+
+  telas.forEach((el) => {
+    el.classList.remove("active");
+  });
 }
+
+// ===============================
+// DEBUG (opcional, ajuda MUITO)
+// ===============================
+
+console.log("App carregado com sucesso");
