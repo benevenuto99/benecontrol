@@ -4,84 +4,114 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BeneControl</title>
-
-  <<link rel="stylesheet" href="styles.css?v=2">>
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#0f172a">
+  <link rel="stylesheet" href="styles.css?v=1">
 </head>
 
 <body>
 
-  <!-- LOGIN -->
-  <div id="login-screen" class="screen active">
+<!-- TELA INICIAL -->
+<div id="home" class="screen active">
   <h1>BeneControl</h1>
 
-  <input type="password" id="senha" placeholder="Crie ou digite sua senha">
-  <input type="password" id="confirmarSenha" placeholder="Confirme a senha (primeira vez)">
-
-  <button onclick="login()">Entrar</button>
-
-  <p id="mensagem"></p>
+  <div class="cards">
+    <div class="card" onclick="abrirTela('pessoal')">👤 Pessoal</div>
+    <div class="card" onclick="abrirTela('beneapps')">🏢 BeneApps</div>
+    <div class="card" onclick="abrirTela('projetos')">💻 Projetos</div>
+    <div class="card" onclick="abrirTela('planejamento')">📊 Planejamento</div>
+  </div>
 </div>
 
-  <!-- HOME -->
-  <div id="home-screen" class="screen">
-    <h2>Escolha uma área</h2>
+<!-- TELA PESSOAL -->
+<div id="pessoal" class="screen">
+  <h1>Pessoal</h1>
+  <button onclick="voltar()">Voltar</button>
+</div>
 
-    <div class="cards">
-      <div class="card" onclick="openScreen('felipe')">Felipe</div>
-      <div class="card" onclick="openScreen('beneapps')">BeneApps</div>
-      <div class="card" onclick="openScreen('projetos')">Projetos</div>
-    </div>
-  </div>
+<!-- TELA BENEAPPS -->
+<div id="beneapps" class="screen">
+  <h1>BeneApps</h1>
+  <button onclick="voltar()">Voltar</button>
+</div>
 
-  <!-- FELIPE -->
-  <div id="felipe-screen" class="screen">
-    <h2>Financeiro Pessoal</h2>
+<!-- TELA PROJETOS -->
+<div id="projetos" class="screen">
+  <h1>Projetos HTML</h1>
 
-    <input type="number" id="valor" placeholder="Valor">
-    <button onclick="addTransacao('entrada')">Entrada</button>
-    <button onclick="addTransacao('saida')">Saída</button>
-
-    <h3>Saldo: R$ <span id="saldo">0</span></h3>
-
-    <button onclick="goHome()">Voltar</button>
-  </div>
-
-  <!-- BENEAPPS -->
-  <div id="beneapps-screen" class="screen">
-    <h2>BeneApps</h2>
-
-    <input type="number" id="gastoEmpresa" placeholder="Valor">
-    <button onclick="gastoEmpresa()">Registrar gasto</button>
-
-    <button onclick="goHome()">Voltar</button>
-  </div>
-
-  <!-- PROJETOS -->
-  <div id="projetos-screen" class="screen">
-  <h2>Projetos</h2>
-
-  <input type="text" id="nomeProjeto" placeholder="Nome do projeto">
-
-  <textarea id="descricaoProjeto" placeholder="Ideias..."></textarea>
-
-  <textarea id="codigoHTML" placeholder="Cole ou escreva seu código HTML aqui..."></textarea>
+  <textarea id="codigoHTML" placeholder="Cole seu HTML aqui..."></textarea>
 
   <div class="botoes">
-    <button onclick="copiarCodigo()">📋 Copiar</button>
-    <button onclick="limparCodigo()">🧹 Limpar</button>
-    <button onclick="executarHTML()">▶️ Executar</button>
+    <button onclick="copiarCodigo()">Copiar</button>
+    <button onclick="limparCodigo()">Limpar</button>
+    <button onclick="executarHTML()">Executar</button>
   </div>
 
-  <div id="preview">
-    <iframe id="previewFrame"></iframe>
+  <div id="preview"></div>
+
+  <button onclick="voltar()">Voltar</button>
+</div>
+
+<!-- TELA PLANEJAMENTO -->
+<div id="planejamento" class="screen">
+
+  <h1>📊 Progresso do App</h1>
+
+  <div class="progress-container">
+    <div class="progress-bar" style="width: 20%"></div>
+  </div>
+  <p>20% concluído</p>
+
+  <h2>📋 Funcionalidades</h2>
+  <ul class="lista">
+    <li>✅ Tela inicial</li>
+    <li>✅ Projetos HTML</li>
+    <li>⏳ Visual do app</li>
+    <li>❌ Sistema financeiro</li>
+    <li>❌ Contas recorrentes</li>
+    <li>❌ Integração entre contas</li>
+    <li>❌ BeneApps (clientes)</li>
+    <li>❌ Viagens</li>
+  </ul>
+
+  <h2>💡 Ideias do Projeto</h2>
+
+  <div class="ideia">
+    <h3>Contas Recorrentes Inteligentes</h3>
+    <p>
+      Tabela mensal automática. Ao finalizar o mês, cria o próximo.
+      Contas com (débito) mantêm valor. Variáveis pedem novo valor.
+      Integração com contas ao pagar.
+    </p>
   </div>
 
-  <button onclick="addProjeto()">Salvar projeto</button>
-  <button onclick="goHome()">Voltar</button>
+  <div class="ideia">
+    <h3>Controle Financeiro Completo</h3>
+    <p>
+      Contas separadas (Itaú, Bradesco, Sicoob, Cofre).
+      Registro de entradas e saídas.
+      Categorias detalhadas.
+    </p>
+  </div>
+
+  <div class="ideia">
+    <h3>BeneApps / Clientes</h3>
+    <p>
+      Cadastro de clientes, contratos, histórico de pagamento
+      e botão direto para WhatsApp.
+    </p>
+  </div>
+
+  <div class="ideia">
+    <h3>Controle de Viagens</h3>
+    <p>
+      Cadastro completo com hotel, voo, comprovantes,
+      roteiro e passeios.
+    </p>
+  </div>
+
+  <button onclick="voltar()">Voltar</button>
 </div>
 
 <script src="app.js"></script>
+
 </body>
 </html>

@@ -1,44 +1,19 @@
-/* RESET */
-* {
+.* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* BASE (ESTILO ORIGINAL MANTIDO) */
 body {
   font-family: Arial, sans-serif;
   background: linear-gradient(180deg, #0a1a3a, #020617);
   color: white;
-  min-height: 100vh;
-}
-
-/* LOGO AJUSTADA (SEM ESTRAGAR) */
-body::after {
-  content: "";
-  position: fixed;
-  bottom: 30px;
-  left: 50%;
-  transform: translateX(-50%);
-
-  width: 200px;
-  height: 70px;
-
-  background: url('assets/logo.png') no-repeat center;
-  background-size: contain;
-
-  opacity: 0.25;
-
-  /* IMPORTANTE: sem blur */
-  filter: none;
-
-  pointer-events: none;
 }
 
 /* TELAS */
 .screen {
   display: none;
-  padding: 40px 20px;
+  padding: 30px 20px;
   text-align: center;
 }
 
@@ -46,34 +21,67 @@ body::after {
   display: block;
 }
 
-/* TÍTULO */
-h1 {
-  font-size: 32px;
-  margin-bottom: 30px;
+/* CARDS */
+.cards {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
-/* INPUTS (ESTILO ORIGINAL) */
-input, textarea {
-  width: 90%;
-  max-width: 400px;
-  padding: 15px;
-  margin: 10px auto;
-
-  border-radius: 12px;
-  border: 1px solid rgba(0, 120, 255, 0.4);
-
-  background: rgba(0, 0, 0, 0.4);
-  color: white;
+.card {
+  padding: 20px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 10px;
+  cursor: pointer;
 }
 
-/* BOTÃO (ESTILO ORIGINAL) */
+/* BOTÕES */
 button {
   margin-top: 20px;
-  padding: 15px 30px;
-
-  border-radius: 12px;
+  padding: 10px 20px;
   border: none;
-
-  background: linear-gradient(135deg, #3a8bfd, #1e5bff);
+  border-radius: 10px;
+  background: #3a8bfd;
   color: white;
+}
+
+/* TEXTAREA */
+textarea {
+  width: 90%;
+  height: 150px;
+  margin: 20px auto;
+  display: block;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+/* PREVIEW */
+#preview iframe {
+  width: 100%;
+  height: 200px;
+  background: white;
+}
+
+/* PROGRESSO */
+.progress-container {
+  width: 80%;
+  margin: 20px auto;
+  height: 20px;
+  background: #111;
+  border-radius: 10px;
+}
+
+.progress-bar {
+  height: 100%;
+  background: #3a8bfd;
+}
+
+/* IDEIAS */
+.ideia {
+  background: rgba(255,255,255,0.05);
+  padding: 10px;
+  border-radius: 10px;
+  margin: 10px 0;
+  text-align: left;
 }
