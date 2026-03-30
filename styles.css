@@ -1,5 +1,5 @@
 /* =======================
-   BASE PREMIUM
+   BASE
 ======================= */
 body {
   margin: 0;
@@ -12,44 +12,26 @@ body {
 }
 
 /* =======================
-   LOGO FUNDO (VIVA)
+   LOGO FUNDO (PNG LIMPO)
 ======================= */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
-  background: url("assets/logo-beneapps.jpg") center center no-repeat;
+  background: url("assets/logo-beneapps.png") center center no-repeat;
   background-size: 45%;
-  opacity: 0.6; /* MAIS FORTE */
-  filter: blur(1px); /* QUASE SEM BLUR */
+  opacity: 1; /* SEM APAGAR */
   z-index: 0;
-  animation: pulseLogo 6s infinite ease-in-out;
-}
-
-/* ANIMAÇÃO SUAVE (PULSANDO) */
-@keyframes pulseLogo {
-  0% {
-    opacity: 0.5;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.7;
-    transform: scale(1.03);
-  }
-  100% {
-    opacity: 0.5;
-    transform: scale(1);
-  }
 }
 
 /* =======================
-   OVERLAY (SUAVE)
+   OVERLAY SUAVE
 ======================= */
 body::after {
   content: "";
   position: fixed;
   inset: 0;
-  background: rgba(2,6,23,0.7);
+  background: rgba(2,6,23,0.6);
   z-index: 0;
 }
 
@@ -112,16 +94,9 @@ input, textarea {
   background: rgba(2,6,23,0.85);
   color: white;
   outline: none;
-  transition: 0.2s;
-}
-
-input:focus, textarea:focus {
-  border: 1px solid #3b82f6;
-  box-shadow: 0 0 12px rgba(59,130,246,0.7);
 }
 
 textarea {
-  resize: vertical;
   min-height: 120px;
 }
 
@@ -145,48 +120,20 @@ button {
   border: none;
   background: linear-gradient(135deg, #3b82f6, #2563eb);
   color: white;
-  font-weight: 500;
   cursor: pointer;
   transition: 0.2s;
-  box-shadow: 0 6px 20px rgba(37,99,235,0.6);
 }
 
 button:hover {
   transform: scale(1.05);
 }
 
-button:active {
-  transform: scale(0.97);
-}
-
-.botoes {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
 /* =======================
    PREVIEW
 ======================= */
-#preview {
-  margin-top: 20px;
-  border-radius: 15px;
-  overflow: hidden;
-  border: 1px solid rgba(255,255,255,0.08);
-  box-shadow: 0 15px 40px rgba(0,0,0,0.7);
-}
-
 #preview iframe {
   width: 100%;
   height: 220px;
   background: white;
   border: none;
-}
-
-/* =======================
-   TEXTO
-======================= */
-#mensagem {
-  margin-top: 10px;
-  color: #38bdf8;
 }
