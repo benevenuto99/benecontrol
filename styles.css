@@ -7,36 +7,49 @@ body {
   color: white;
   text-align: center;
   position: relative;
-  background: radial-gradient(circle at top, #0f172a, #020617 70%);
+  background: radial-gradient(circle at top, #020617, #000814 80%);
   overflow-x: hidden;
 }
 
 /* =======================
-   LOGO FUNDO (MAIS FORTE)
+   LOGO FUNDO (VIVA)
 ======================= */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
   background: url("assets/logo-beneapps.jpg") center center no-repeat;
-  background-size: 50%;
-  opacity: 0.35; /* MAIS VISÍVEL */
-  filter: blur(2px); /* MENOS BORRADO */
+  background-size: 45%;
+  opacity: 0.6; /* MAIS FORTE */
+  filter: blur(1px); /* QUASE SEM BLUR */
   z-index: 0;
+  animation: pulseLogo 6s infinite ease-in-out;
+}
+
+/* ANIMAÇÃO SUAVE (PULSANDO) */
+@keyframes pulseLogo {
+  0% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.03);
+  }
+  100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
 }
 
 /* =======================
-   OVERLAY ESCURO (AJUSTADO)
+   OVERLAY (SUAVE)
 ======================= */
 body::after {
   content: "";
   position: fixed;
   inset: 0;
-  background: linear-gradient(
-    180deg,
-    rgba(2,6,23,0.6),
-    rgba(2,6,23,0.9)
-  );
+  background: rgba(2,6,23,0.7);
   z-index: 0;
 }
 
