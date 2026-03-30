@@ -1,5 +1,5 @@
 /* =======================
-   BASE
+   BASE + FUNDO
 ======================= */
 body {
   margin: 0;
@@ -7,12 +7,25 @@ body {
   background: linear-gradient(135deg, #020617, #0f172a, #020617);
   color: white;
   text-align: center;
+  position: relative;
 }
 
-/* =======================
-   TELAS
-======================= */
+/* LOGO NO FUNDO */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: url("assets/logo-beneapps.jpg") center center no-repeat;
+  background-size: 60%;
+  opacity: 0.06;
+  filter: blur(2px);
+  z-index: 0;
+}
+
+/* GARANTE CONTEÚDO NA FRENTE */
 .screen {
+  position: relative;
+  z-index: 1;
   display: none;
   padding: 20px;
 }
@@ -30,7 +43,7 @@ h1, h2 {
 }
 
 /* =======================
-   CARDS (MENU)
+   CARDS
 ======================= */
 .cards {
   display: flex;
@@ -55,7 +68,7 @@ h1, h2 {
 }
 
 /* =======================
-   INPUTS E TEXTAREAS
+   INPUTS
 ======================= */
 input, textarea {
   width: 85%;
@@ -80,7 +93,7 @@ textarea {
 }
 
 /* =======================
-   ÁREA DE CÓDIGO
+   CÓDIGO
 ======================= */
 #codigoHTML {
   font-family: monospace;
@@ -113,9 +126,6 @@ button:active {
   transform: scale(0.97);
 }
 
-/* =======================
-   BOTÕES AGRUPADOS
-======================= */
 .botoes {
   display: flex;
   justify-content: center;
@@ -123,7 +133,7 @@ button:active {
 }
 
 /* =======================
-   PREVIEW (EXECUÇÃO HTML)
+   PREVIEW
 ======================= */
 #preview {
   margin-top: 20px;
@@ -141,7 +151,7 @@ button:active {
 }
 
 /* =======================
-   TEXTO AUXILIAR
+   TEXTO
 ======================= */
 #mensagem {
   margin-top: 10px;
