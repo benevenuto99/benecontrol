@@ -1,5 +1,5 @@
 /* =======================
-   BASE
+   BASE PREMIUM
 ======================= */
 body {
   margin: 0;
@@ -12,21 +12,21 @@ body {
 }
 
 /* =======================
-   LOGO FUNDO PREMIUM
+   LOGO FUNDO (MAIS FORTE)
 ======================= */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
   background: url("assets/logo-beneapps.jpg") center center no-repeat;
-  background-size: 70%;
-  opacity: 0.12;
-  filter: blur(6px);
+  background-size: 50%;
+  opacity: 0.35; /* MAIS VISÍVEL */
+  filter: blur(2px); /* MENOS BORRADO */
   z-index: 0;
 }
 
 /* =======================
-   CAMADA ESCURA SUAVE
+   OVERLAY ESCURO (AJUSTADO)
 ======================= */
 body::after {
   content: "";
@@ -34,8 +34,8 @@ body::after {
   inset: 0;
   background: linear-gradient(
     180deg,
-    rgba(2,6,23,0.7),
-    rgba(2,6,23,0.95)
+    rgba(2,6,23,0.6),
+    rgba(2,6,23,0.9)
   );
   z-index: 0;
 }
@@ -73,7 +73,7 @@ h1, h2 {
 }
 
 .card {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.06);
   backdrop-filter: blur(15px);
   padding: 20px 25px;
   border-radius: 20px;
@@ -84,7 +84,7 @@ h1, h2 {
 
 .card:hover {
   transform: scale(1.05);
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.1);
 }
 
 /* =======================
@@ -95,8 +95,8 @@ input, textarea {
   margin: 10px 0;
   padding: 14px;
   border-radius: 12px;
-  border: 1px solid rgba(59,130,246,0.3);
-  background: rgba(2,6,23,0.8);
+  border: 1px solid rgba(59,130,246,0.4);
+  background: rgba(2,6,23,0.85);
   color: white;
   outline: none;
   transition: 0.2s;
@@ -104,7 +104,7 @@ input, textarea {
 
 input:focus, textarea:focus {
   border: 1px solid #3b82f6;
-  box-shadow: 0 0 12px rgba(59,130,246,0.6);
+  box-shadow: 0 0 12px rgba(59,130,246,0.7);
 }
 
 textarea {
@@ -135,7 +135,7 @@ button {
   font-weight: 500;
   cursor: pointer;
   transition: 0.2s;
-  box-shadow: 0 6px 20px rgba(37,99,235,0.5);
+  box-shadow: 0 6px 20px rgba(37,99,235,0.6);
 }
 
 button:hover {
