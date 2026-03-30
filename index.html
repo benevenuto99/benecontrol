@@ -14,10 +14,15 @@
 
   <!-- LOGIN -->
   <div id="login-screen" class="screen active">
-    <h1>BeneControl</h1>
-    <input type="password" id="password" placeholder="Digite sua senha">
-    <button onclick="login()">Entrar</button>
-  </div>
+  <h1>BeneControl</h1>
+
+  <input type="password" id="senha" placeholder="Crie ou digite sua senha">
+  <input type="password" id="confirmarSenha" placeholder="Confirme a senha (primeira vez)">
+
+  <button onclick="login()">Entrar</button>
+
+  <p id="mensagem"></p>
+</div>
 
   <!-- HOME -->
   <div id="home-screen" class="screen">

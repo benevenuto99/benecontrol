@@ -79,3 +79,8 @@ textarea {
   height: 200px;
   background: white;
 }
+
+#mensagem {
+  margin-top: 10px;
+  color: #38bdf8;
+}

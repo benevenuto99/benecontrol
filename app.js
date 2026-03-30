@@ -1,7 +1,32 @@
 let saldo = 0;
 
 function login() {
-  const senha = document.getElementById("password").value;
+  const senha = document.getElementById("senha").value;
+  const confirmar = document.getElementById("confirmarSenha").value;
+  const mensagem = document.getElementById("mensagem");
+
+  if (!localStorage.getItem("senha")) {
+    if (!senha || !confirmar) {
+      mensagem.innerText = "Preencha os dois campos.";
+      return;
+    }
+
+    if (senha !== confirmar) {
+      mensagem.innerText = "As senhas não coincidem.";
+      return;
+    }
+
+    localStorage.setItem("senha", senha);
+    mensagem.innerText = "Senha criada com sucesso!";
+    return;
+  }
+
+  if (senha === localStorage.getItem("senha")) {
+    openScreen("home");
+  } else {
+    mensagem.innerText = "Senha incorreta.";
+  }
+}
 
   if (!localStorage.getItem("senha")) {
     localStorage.setItem("senha", senha);
