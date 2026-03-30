@@ -1,10 +1,12 @@
-let saldo = 0;
-
+// =======================
+// LOGIN
+// =======================
 function login() {
   const senha = document.getElementById("senha").value;
   const confirmar = document.getElementById("confirmarSenha").value;
   const mensagem = document.getElementById("mensagem");
 
+  // Primeira vez (criar senha)
   if (!localStorage.getItem("senha")) {
     if (!senha || !confirmar) {
       mensagem.innerText = "Preencha os dois campos.";
@@ -21,6 +23,7 @@ function login() {
     return;
   }
 
+  // Login normal
   if (senha === localStorage.getItem("senha")) {
     openScreen("home");
   } else {
@@ -28,17 +31,9 @@ function login() {
   }
 }
 
-  if (!localStorage.getItem("senha")) {
-    localStorage.setItem("senha", senha);
-  }
-
-  if (senha === localStorage.getItem("senha")) {
-    openScreen("home");
-  } else {
-    alert("Senha incorreta");
-
-}
-
+// =======================
+// NAVEGAÇÃO
+// =======================
 function openScreen(nome) {
   document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
 
@@ -52,8 +47,15 @@ function goHome() {
   openScreen("home");
 }
 
+// =======================
+// FINANCEIRO
+// =======================
+let saldo = 0;
+
 function addTransacao(tipo) {
   const valor = parseFloat(document.getElementById("valor").value);
+
+  if (!valor) return;
 
   if (tipo === "entrada") saldo += valor;
   else saldo -= valor;
@@ -61,42 +63,37 @@ function addTransacao(tipo) {
   document.getElementById("saldo").innerText = saldo.toFixed(2);
 }
 
+// =======================
+// BENEAPPS
+// =======================
 function gastoEmpresa() {
   const valor = document.getElementById("gastoEmpresa").value;
   alert("Gasto registrado: R$ " + valor);
 }
 
+// =======================
+// PROJETOS
+// =======================
 function addProjeto() {
   const nome = document.getElementById("nomeProjeto").value;
   alert("Projeto salvo: " + nome);
 }
 
-textarea {
-  min-height: 120px;
-  resize: vertical;
+function copiarCodigo() {
+  const codigo = document.getElementById("codigoHTML").value;
+
+  navigator.clipboard.writeText(codigo).then(() => {
+    alert("Código copiado!");
+  });
 }
 
-#codigoHTML {
-  min-height: 180px;
-  font-family: monospace;
+function limparCodigo() {
+  document.getElementById("codigoHTML").value = "";
 }
 
-.botoes {
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-  margin-top: 10px;
-}
+function executarHTML() {
+  const codigo = document.getElementById("codigoHTML").value;
+  const iframe = document.getElementById("previewFrame");
 
-#preview {
-  margin-top: 20px;
-  border: 1px solid #334155;
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-#preview iframe {
-  width: 100%;
-  height: 200px;
-  background: white;
+  iframe.srcdoc = codigo;
 }
