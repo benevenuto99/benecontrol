@@ -55,14 +55,27 @@
 
   <!-- PROJETOS -->
   <div id="projetos-screen" class="screen">
-    <h2>Projetos</h2>
+  <h2>Projetos</h2>
 
-    <input type="text" id="nomeProjeto" placeholder="Nome do projeto">
-    <textarea id="descricaoProjeto" placeholder="Ideias..."></textarea>
-    <button onclick="addProjeto()">Salvar projeto</button>
+  <input type="text" id="nomeProjeto" placeholder="Nome do projeto">
 
-    <button onclick="goHome()">Voltar</button>
+  <textarea id="descricaoProjeto" placeholder="Ideias..."></textarea>
+
+  <textarea id="codigoHTML" placeholder="Cole ou escreva seu código HTML aqui..."></textarea>
+
+  <div class="botoes">
+    <button onclick="copiarCodigo()">📋 Copiar</button>
+    <button onclick="limparCodigo()">🧹 Limpar</button>
+    <button onclick="executarHTML()">▶️ Executar</button>
   </div>
+
+  <div id="preview">
+    <iframe id="previewFrame"></iframe>
+  </div>
+
+  <button onclick="addProjeto()">Salvar projeto</button>
+  <button onclick="goHome()">Voltar</button>
+</div>
 
 <script src="app.js"></script>
 </body>

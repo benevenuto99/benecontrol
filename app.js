@@ -45,3 +45,33 @@ function addProjeto() {
   const nome = document.getElementById("nomeProjeto").value;
   alert("Projeto salvo: " + nome);
 }
+
+textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+#codigoHTML {
+  min-height: 180px;
+  font-family: monospace;
+}
+
+.botoes {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+#preview {
+  margin-top: 20px;
+  border: 1px solid #334155;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+#preview iframe {
+  width: 100%;
+  height: 200px;
+  background: white;
+}
