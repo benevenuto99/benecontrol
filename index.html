@@ -1,43 +1,43 @@
-<!DOCTYPE html>
+.<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BeneControl</title>
-  <link rel="stylesheet" href="styles.css?v=1">
+  <link rel="stylesheet" href="styles.css?v=2">
 </head>
 
 <body>
 
-<!-- TELA INICIAL -->
-<div id="home" class="screen active">
+<!-- LOGIN -->
+<div id="login-screen" class="screen active">
   <h1>BeneControl</h1>
 
+  <input type="password" id="senha" placeholder="Crie ou digite sua senha">
+  <input type="password" id="confirmarSenha" placeholder="Confirme a senha (primeira vez)">
+
+  <button onclick="login()">Entrar</button>
+
+  <p id="mensagem"></p>
+</div>
+
+<!-- HOME -->
+<div id="home-screen" class="screen">
+  <h2>Escolha uma área</h2>
+
   <div class="cards">
-    <div class="card" onclick="abrirTela('pessoal')">👤 Pessoal</div>
-    <div class="card" onclick="abrirTela('beneapps')">🏢 BeneApps</div>
-    <div class="card" onclick="abrirTela('projetos')">💻 Projetos</div>
-    <div class="card" onclick="abrirTela('planejamento')">📊 Planejamento</div>
+    <div class="card" onclick="openScreen('felipe')">👤 Pessoal</div>
+    <div class="card" onclick="openScreen('beneapps')">🏢 BeneApps</div>
+    <div class="card" onclick="openScreen('projetos')">💻 Projetos</div>
+    <div class="card" onclick="openScreen('planejamento')">📊 Planejamento</div>
   </div>
 </div>
 
-<!-- TELA PESSOAL -->
-<div id="pessoal" class="screen">
-  <h1>Pessoal</h1>
-  <button onclick="voltar()">Voltar</button>
-</div>
-
-<!-- TELA BENEAPPS -->
-<div id="beneapps" class="screen">
-  <h1>BeneApps</h1>
-  <button onclick="voltar()">Voltar</button>
-</div>
-
-<!-- TELA PROJETOS -->
+<!-- PROJETOS -->
 <div id="projetos" class="screen">
-  <h1>Projetos HTML</h1>
+  <h2>Projetos</h2>
 
-  <textarea id="codigoHTML" placeholder="Cole seu HTML aqui..."></textarea>
+  <textarea id="codigoHTML" placeholder="Cole seu código HTML aqui..."></textarea>
 
   <div class="botoes">
     <button onclick="copiarCodigo()">Copiar</button>
@@ -47,68 +47,48 @@
 
   <div id="preview"></div>
 
-  <button onclick="voltar()">Voltar</button>
+  <button onclick="voltarHome()">Voltar</button>
 </div>
 
-<!-- TELA PLANEJAMENTO -->
+<!-- PLANEJAMENTO (NOVA TELA) -->
 <div id="planejamento" class="screen">
 
-  <h1>📊 Progresso do App</h1>
+  <h2>📊 Progresso do App</h2>
 
   <div class="progress-container">
     <div class="progress-bar" style="width: 20%"></div>
   </div>
   <p>20% concluído</p>
 
-  <h2>📋 Funcionalidades</h2>
+  <h3>📋 Funcionalidades</h3>
   <ul class="lista">
-    <li>✅ Tela inicial</li>
-    <li>✅ Projetos HTML</li>
-    <li>⏳ Visual do app</li>
-    <li>❌ Sistema financeiro</li>
+    <li>✅ Login</li>
+    <li>✅ Home</li>
+    <li>✅ Projetos</li>
+    <li>⏳ Visual</li>
+    <li>❌ Financeiro</li>
     <li>❌ Contas recorrentes</li>
-    <li>❌ Integração entre contas</li>
-    <li>❌ BeneApps (clientes)</li>
-    <li>❌ Viagens</li>
+    <li>❌ BeneApps</li>
   </ul>
 
-  <h2>💡 Ideias do Projeto</h2>
+  <h3>💡 Ideias</h3>
 
   <div class="ideia">
-    <h3>Contas Recorrentes Inteligentes</h3>
-    <p>
-      Tabela mensal automática. Ao finalizar o mês, cria o próximo.
-      Contas com (débito) mantêm valor. Variáveis pedem novo valor.
-      Integração com contas ao pagar.
-    </p>
+    <h4>Contas Recorrentes</h4>
+    <p>Replicação mensal automática com integração de contas.</p>
   </div>
 
   <div class="ideia">
-    <h3>Controle Financeiro Completo</h3>
-    <p>
-      Contas separadas (Itaú, Bradesco, Sicoob, Cofre).
-      Registro de entradas e saídas.
-      Categorias detalhadas.
-    </p>
+    <h4>Financeiro</h4>
+    <p>Controle completo de entradas, saídas e contas.</p>
   </div>
 
   <div class="ideia">
-    <h3>BeneApps / Clientes</h3>
-    <p>
-      Cadastro de clientes, contratos, histórico de pagamento
-      e botão direto para WhatsApp.
-    </p>
+    <h4>Viagens</h4>
+    <p>Controle de viagens com comprovantes e roteiros.</p>
   </div>
 
-  <div class="ideia">
-    <h3>Controle de Viagens</h3>
-    <p>
-      Cadastro completo com hotel, voo, comprovantes,
-      roteiro e passeios.
-    </p>
-  </div>
-
-  <button onclick="voltar()">Voltar</button>
+  <button onclick="voltarHome()">Voltar</button>
 </div>
 
 <script src="app.js"></script>

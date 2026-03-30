@@ -1,4 +1,4 @@
-.* {
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -10,7 +10,6 @@ body {
   color: white;
 }
 
-/* TELAS */
 .screen {
   display: none;
   padding: 30px 20px;
@@ -32,14 +31,26 @@ body {
 .card {
   padding: 20px;
   background: rgba(255,255,255,0.05);
-  border-radius: 10px;
+  border-radius: 12px;
   cursor: pointer;
 }
 
-/* BOTÕES */
+/* INPUT */
+input {
+  width: 80%;
+  margin: 10px auto;
+  display: block;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #3a8bfd;
+  background: transparent;
+  color: white;
+}
+
+/* BOTÃO */
 button {
-  margin-top: 20px;
-  padding: 10px 20px;
+  margin-top: 15px;
+  padding: 12px 20px;
   border: none;
   border-radius: 10px;
   background: #3a8bfd;
