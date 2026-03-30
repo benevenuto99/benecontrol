@@ -1,97 +1,62 @@
-.<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BeneControl</title>
-  <link rel="stylesheet" href="styles.css?v=2">
+  <link rel="stylesheet" href="estilos.css">
 </head>
 
 <body>
 
 <!-- LOGIN -->
-<div id="login-screen" class="screen active">
+<div id="loginScreen" class="screen active">
   <h1>BeneControl</h1>
 
   <input type="password" id="senha" placeholder="Crie ou digite sua senha">
   <input type="password" id="confirmarSenha" placeholder="Confirme a senha (primeira vez)">
 
   <button onclick="login()">Entrar</button>
-
-  <p id="mensagem"></p>
 </div>
 
-<!-- HOME -->
-<div id="home-screen" class="screen">
-  <h2>Escolha uma área</h2>
+<!-- MENU -->
+<div id="menuScreen" class="screen">
+  <h1>BeneControl</h1>
 
-  <div class="cards">
-    <div class="card" onclick="openScreen('felipe')">👤 Pessoal</div>
-    <div class="card" onclick="openScreen('beneapps')">🏢 BeneApps</div>
-    <div class="card" onclick="openScreen('projetos')">💻 Projetos</div>
-    <div class="card" onclick="openScreen('planejamento')">📊 Planejamento</div>
+  <div class="grid">
+    <div onclick="openScreen('pessoalScreen')">👤 Pessoal</div>
+    <div onclick="openScreen('beneappsScreen')">🏢 BeneApps</div>
+    <div onclick="openScreen('projetosScreen')">💻 Projetos</div>
+    <div onclick="openScreen('planejamentoScreen')">📊 Planejamento</div>
   </div>
+
+  <img src="assets/logo.png" class="logo">
+</div>
+
+<!-- PESSOAL -->
+<div id="pessoalScreen" class="screen">
+  <button onclick="voltar()">← Voltar</button>
+  <h2>Pessoal</h2>
+</div>
+
+<!-- BENEAPPS -->
+<div id="beneappsScreen" class="screen">
+  <button onclick="voltar()">← Voltar</button>
+  <h2>BeneApps</h2>
 </div>
 
 <!-- PROJETOS -->
-<div id="projetos" class="screen">
+<div id="projetosScreen" class="screen">
+  <button onclick="voltar()">← Voltar</button>
   <h2>Projetos</h2>
-
-  <textarea id="codigoHTML" placeholder="Cole seu código HTML aqui..."></textarea>
-
-  <div class="botoes">
-    <button onclick="copiarCodigo()">Copiar</button>
-    <button onclick="limparCodigo()">Limpar</button>
-    <button onclick="executarHTML()">Executar</button>
-  </div>
-
-  <div id="preview"></div>
-
-  <button onclick="voltarHome()">Voltar</button>
 </div>
 
-<!-- PLANEJAMENTO (NOVA TELA) -->
-<div id="planejamento" class="screen">
-
-  <h2>📊 Progresso do App</h2>
-
-  <div class="progress-container">
-    <div class="progress-bar" style="width: 20%"></div>
-  </div>
-  <p>20% concluído</p>
-
-  <h3>📋 Funcionalidades</h3>
-  <ul class="lista">
-    <li>✅ Login</li>
-    <li>✅ Home</li>
-    <li>✅ Projetos</li>
-    <li>⏳ Visual</li>
-    <li>❌ Financeiro</li>
-    <li>❌ Contas recorrentes</li>
-    <li>❌ BeneApps</li>
-  </ul>
-
-  <h3>💡 Ideias</h3>
-
-  <div class="ideia">
-    <h4>Contas Recorrentes</h4>
-    <p>Replicação mensal automática com integração de contas.</p>
-  </div>
-
-  <div class="ideia">
-    <h4>Financeiro</h4>
-    <p>Controle completo de entradas, saídas e contas.</p>
-  </div>
-
-  <div class="ideia">
-    <h4>Viagens</h4>
-    <p>Controle de viagens com comprovantes e roteiros.</p>
-  </div>
-
-  <button onclick="voltarHome()">Voltar</button>
+<!-- PLANEJAMENTO -->
+<div id="planejamentoScreen" class="screen">
+  <button onclick="voltar()">← Voltar</button>
+  <h2>Planejamento</h2>
 </div>
 
 <script src="app.js"></script>
-
 </body>
 </html>
