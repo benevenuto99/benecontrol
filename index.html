@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BeneControl</title>
+
+  <link rel="stylesheet" href="styles.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0f172a">
+</head>
+
+<body>
+
+  <!-- LOGIN -->
+  <div id="login-screen" class="screen active">
+    <h1>BeneControl</h1>
+    <input type="password" id="password" placeholder="Digite sua senha">
+    <button onclick="login()">Entrar</button>
+  </div>
+
+  <!-- HOME -->
+  <div id="home-screen" class="screen">
+    <h2>Escolha uma área</h2>
+
+    <div class="cards">
+      <div class="card" onclick="openScreen('felipe')">Felipe</div>
+      <div class="card" onclick="openScreen('beneapps')">BeneApps</div>
+      <div class="card" onclick="openScreen('projetos')">Projetos</div>
+    </div>
+  </div>
+
+  <!-- FELIPE -->
+  <div id="felipe-screen" class="screen">
+    <h2>Financeiro Pessoal</h2>
+
+    <input type="number" id="valor" placeholder="Valor">
+    <button onclick="addTransacao('entrada')">Entrada</button>
+    <button onclick="addTransacao('saida')">Saída</button>
+
+    <h3>Saldo: R$ <span id="saldo">0</span></h3>
+
+    <button onclick="goHome()">Voltar</button>
+  </div>
+
+  <!-- BENEAPPS -->
+  <div id="beneapps-screen" class="screen">
+    <h2>BeneApps</h2>
+
+    <input type="number" id="gastoEmpresa" placeholder="Valor">
+    <button onclick="gastoEmpresa()">Registrar gasto</button>
+
+    <button onclick="goHome()">Voltar</button>
+  </div>
+
+  <!-- PROJETOS -->
+  <div id="projetos-screen" class="screen">
+    <h2>Projetos</h2>
+
+    <input type="text" id="nomeProjeto" placeholder="Nome do projeto">
+    <textarea id="descricaoProjeto" placeholder="Ideias..."></textarea>
+    <button onclick="addProjeto()">Salvar projeto</button>
+
+    <button onclick="goHome()">Voltar</button>
+  </div>
+
+<script src="app.js"></script>
+</body>
+</html>
