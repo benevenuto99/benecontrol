@@ -5,21 +5,19 @@
   box-sizing: border-box;
 }
 
-/* BASE */
+/* BASE (ESTILO ORIGINAL MANTIDO) */
 body {
-  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-  background: radial-gradient(circle at top, #0b1f4d, #020617 75%);
-  color: #ffffff;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(180deg, #0a1a3a, #020617);
+  color: white;
   min-height: 100vh;
-  overflow-x: hidden;
-  position: relative;
 }
 
-/* LOGO NO RODAPÉ */
+/* LOGO AJUSTADA (SEM ESTRAGAR) */
 body::after {
   content: "";
   position: fixed;
-  bottom: 25px;
+  bottom: 30px;
   left: 50%;
   transform: translateX(-50%);
 
@@ -29,19 +27,17 @@ body::after {
   background: url('assets/logo.png') no-repeat center;
   background-size: contain;
 
-  opacity: 0.22;
+  opacity: 0.25;
 
-  filter: drop-shadow(0 0 12px rgba(0, 140, 255, 0.6));
+  /* IMPORTANTE: sem blur */
+  filter: none;
 
   pointer-events: none;
-  z-index: 0;
 }
 
 /* TELAS */
 .screen {
   display: none;
-  position: relative;
-  z-index: 1;
   padding: 40px 20px;
   text-align: center;
 }
@@ -50,147 +46,34 @@ body::after {
   display: block;
 }
 
-/* TÍTULOS */
+/* TÍTULO */
 h1 {
   font-size: 32px;
   margin-bottom: 30px;
-  letter-spacing: 1px;
 }
 
-h2 {
-  font-size: 22px;
-  margin-bottom: 20px;
-  opacity: 0.9;
-}
-
-/* INPUTS */
+/* INPUTS (ESTILO ORIGINAL) */
 input, textarea {
   width: 90%;
-  max-width: 420px;
-  margin: 12px auto;
-  padding: 16px;
+  max-width: 400px;
+  padding: 15px;
+  margin: 10px auto;
 
-  border-radius: 16px;
-  border: 1px solid rgba(0, 140, 255, 0.5);
+  border-radius: 12px;
+  border: 1px solid rgba(0, 120, 255, 0.4);
 
-  background: rgba(0, 20, 60, 0.85);
-  backdrop-filter: blur(6px);
-
-  color: #ffffff;
-  font-size: 15px;
-
-  outline: none;
-
-  box-shadow: 
-    0 0 12px rgba(0, 140, 255, 0.2),
-    inset 0 0 6px rgba(0, 140, 255, 0.1);
-
-  transition: 0.2s;
+  background: rgba(0, 0, 0, 0.4);
+  color: white;
 }
 
-/* FOCO */
-input:focus, textarea:focus {
-  border-color: #3aa0ff;
-  box-shadow: 0 0 20px rgba(0, 140, 255, 0.6);
-}
-
-/* TEXTAREA */
-textarea {
-  min-height: 120px;
-  font-family: monospace;
-  background: #020617;
-}
-
-/* BOTÃO */
+/* BOTÃO (ESTILO ORIGINAL) */
 button {
   margin-top: 20px;
-  padding: 16px 30px;
+  padding: 15px 30px;
 
+  border-radius: 12px;
   border: none;
-  border-radius: 16px;
 
   background: linear-gradient(135deg, #3a8bfd, #1e5bff);
-
   color: white;
-  font-size: 16px;
-  font-weight: bold;
-
-  cursor: pointer;
-
-  box-shadow: 0 0 25px rgba(0, 140, 255, 0.6);
-
-  transition: 0.2s;
-}
-
-button:hover {
-  transform: translateY(-1px);
-}
-
-button:active {
-  transform: scale(0.95);
-}
-
-/* CARDS */
-.cards {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  flex-wrap: wrap;
-}
-
-.card {
-  flex: 1;
-  min-width: 100px;
-  max-width: 140px;
-
-  padding: 20px 15px;
-
-  border-radius: 18px;
-
-  background: rgba(0, 30, 80, 0.6);
-  backdrop-filter: blur(10px);
-
-  box-shadow: 
-    0 10px 30px rgba(0, 0, 0, 0.5),
-    inset 0 0 10px rgba(255, 255, 255, 0.03);
-
-  transition: 0.2s;
-
-  cursor: pointer;
-}
-
-.card:hover {
-  transform: translateY(-4px);
-}
-
-.card:active {
-  transform: scale(0.95);
-}
-
-/* PREVIEW */
-.preview {
-  margin-top: 20px;
-  border-radius: 14px;
-  overflow: hidden;
-  background: white;
-  box-shadow: 0 15px 35px rgba(0,0,0,0.5);
-}
-
-/* TEXTO AUXILIAR */
-#mensagem {
-  margin-top: 10px;
-  font-size: 14px;
-  opacity: 0.7;
-}
-
-/* RESPONSIVO */
-@media (max-width: 480px) {
-  h1 {
-    font-size: 26px;
-  }
-
-  .card {
-    max-width: 120px;
-    padding: 16px;
-  }
 }
