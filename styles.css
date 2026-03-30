@@ -6,70 +6,53 @@
 }
 
 body {
-  background: linear-gradient(to bottom, #0a1f44, #0d2b5c, #133b7a);
+  background: radial-gradient(circle at top, #0b1f4d, #020b1f);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   color: white;
-  text-align: center;
-  min-height: 100vh;
 }
 
-/* TELAS */
-.screen {
-  display: none;
-  padding: 40px 20px;
-}
-
-.screen.active {
-  display: block;
-}
-
-/* INPUTS */
-input {
-  display: block;
+.login-container {
   width: 90%;
   max-width: 400px;
-  margin: 15px auto;
-  padding: 15px;
-  border-radius: 12px;
-  border: 1px solid #4da3ff;
-  background: transparent;
-  color: white;
+  text-align: center;
 }
 
-/* BOTÕES */
+h1 {
+  margin-bottom: 30px;
+}
+
+input {
+  width: 100%;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 12px;
+  border: 1px solid #2e6cff;
+  background: transparent;
+  color: white;
+  outline: none;
+}
+
+input::placeholder {
+  color: #7aa2ff;
+}
+
 button {
-  margin-top: 20px;
-  padding: 12px 25px;
+  padding: 12px 30px;
   border-radius: 12px;
   border: none;
   background: linear-gradient(135deg, #4da3ff, #2c6ed5);
   color: white;
+  font-weight: bold;
   cursor: pointer;
+  box-shadow: 0 0 20px rgba(77,163,255,0.6);
+  margin-top: 10px;
 }
 
-/* MENU */
-.menu-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 15px;
-  max-width: 400px;
-  margin: 30px auto;
-}
-
-.card {
-  background: rgba(255,255,255,0.05);
-  padding: 20px;
-  border-radius: 15px;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.card:hover {
-  background: rgba(255,255,255,0.1);
-}
-
-/* LOGO */
 .logo {
   margin-top: 40px;
-  width: 200px;
-  opacity: 0.9;
+  width: 180px;
+  opacity: 0.85;
 }
